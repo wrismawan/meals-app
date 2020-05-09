@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import { CATEGORIES, MEALS }  from '../data/dummy-data';
 import { FlatList } from 'react-native-gesture-handler';
 import MealItem from '../components/MealItem';
+import MealList from '../components/MealList';
 
 const CategoryMealsScreen = props => {
     const categoryId = props.navigation.getParam('categoryId');
@@ -11,29 +12,12 @@ const CategoryMealsScreen = props => {
     const displayedMeals = MEALS.filter(
         meal => meal.categoryIds.indexOf(categoryId) >= 0
     );
-
-    const renderMealItem = itemData => {
-        return(
-            <MealItem 
-                title={itemData.item.title}
-                duration={itemData.item.duration}
-                image={itemData.item.imageUrl}
-                complexity={itemData.item.complexity.toUpperCase()}
-                affordability={itemData.item.affordability.toUpperCase()}
-                onSelectMeal={() => {}}
-            />
-        );
-    };
-
+    
     return (
-        <View style={styles.screen}>
-            <FlatList
-                data={displayedMeals}
-                keyExtractor={(item, index) => item.id}
-                renderItem={renderMealItem}
-                style={{ width: '100%'}}
-            />
-        </View>
+        <MealList 
+            listData={displayedMeals}
+            navigation={props.navigation}
+        />
     );
 };
 
